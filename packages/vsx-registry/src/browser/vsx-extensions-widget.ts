@@ -70,13 +70,13 @@ export class VSXExtensionsWidget extends SourceTreeWidget implements BadgeWidget
         }));
     }
 
-    private _badgeNode: Node | undefined = undefined;
-    get badgeNode(): Node | undefined {
-        return this._badgeNode;
+    private _badgeCount: number | undefined = undefined;
+    get badge(): number | undefined {
+        return this._badgeCount;
     }
 
-    set badgeNode(node: Node | undefined) {
-        this._badgeNode = node;
+    set badge(count: number | undefined) {
+        this._badgeCount = count;
         this.onDidChangeBadge.fire();
     }
 
@@ -104,33 +104,15 @@ export class VSXExtensionsWidget extends SourceTreeWidget implements BadgeWidget
         this.title.label = title;
         this.title.caption = title;
 
-        const countLabel = await this.resolveCountLabel();
-        this.updateBadge(`${countLabel}`);
+        this.badge = await this.resolveCount();
     }
 
-    protected updateBadge(innerText: string): void {
-        if (innerText.length === 0) {
-            this.badgeNode = undefined;
-            return;
-        }
-
-        const badge = document.createElement('span');
-        badge.classList.add('notification-count');
-        badge.innerText = innerText;
-
-        const badgeContainer = document.createElement('div');
-        badgeContainer.classList.add('notification-count-container');
-        badgeContainer.appendChild(badge);
-        this.badgeNode = badgeContainer;
-    }
-
-    protected async resolveCountLabel(): Promise<string> {
-        let label = '';
+    protected async resolveCount(): Promise<number | undefined> {
         if (this.options.id !== VSXExtensionsSourceOptions.SEARCH_RESULT) {
             const elements = await this.source?.getElements() || [];
-            label = `${[...elements].length}`;
+            return [...elements].length;
         }
-        return label;
+        return undefined;
     }
 
     protected override tapNode(node?: TreeNode): void {

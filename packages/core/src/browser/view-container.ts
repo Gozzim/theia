@@ -58,7 +58,7 @@ export interface DescriptionWidget {
 }
 
 export interface BadgeWidget {
-    badgeNode: Node | undefined;
+    badge: number | undefined;
     onDidChangeBadge: Emitter<void>;
 }
 
@@ -1161,7 +1161,13 @@ export class ViewContainerPart extends BaseWidget {
         const description = document.createElement('span');
         description.classList.add('description');
 
+        const badgeSpan = document.createElement('span');
+        badgeSpan.classList.add('notification-count');
+
         const badgeContainer = document.createElement('div');
+        badgeContainer.classList.add('notification-count-container');
+        badgeContainer.appendChild(badgeSpan);
+        const badgeContainerDisplay = badgeContainer.style.display;
 
         const updateTitle = () => {
             if (this.currentContainerId !== this.originalContainerId && this.originalContainerTitle?.label) {
@@ -1176,9 +1182,10 @@ export class ViewContainerPart extends BaseWidget {
             description.innerText = DescriptionWidget.is(this.wrapped) && !this.collapsed && this.wrapped.description || '';
         };
         const updateBadge = () => {
-            const badge = BadgeWidget.is(this.wrapped) && this.wrapped.badgeNode;
+            const badge = BadgeWidget.is(this.wrapped) && this.wrapped.badge;
             if (badge) {
-                badgeContainer.replaceChildren(badge);
+                badgeSpan.innerText = badge.toString();
+                badgeContainer.style.display = badgeContainerDisplay;
             } else {
                 badgeContainer.style.display = 'none';
             }
