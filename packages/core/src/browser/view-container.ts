@@ -1165,7 +1165,7 @@ export class ViewContainerPart extends BaseWidget {
         badgeSpan.classList.add('notification-count');
 
         const badgeContainer = document.createElement('div');
-        badgeContainer.classList.add('notification-count-container');
+        badgeContainer.classList.add('notification-count-container', 'notification-count-container-margin');
         badgeContainer.appendChild(badgeSpan);
         const badgeContainerDisplay = badgeContainer.style.display;
 
