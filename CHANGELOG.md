@@ -29,6 +29,8 @@
   [#11228](https://github.com/eclipse-theia/theia/pull/11228) - Contributed on behalf of STMicroelectronics.
 - [core] Drop support for Node 12.x, recommend Node 16.x.
   - Update CI/CD matrix to run on Node 14.x, 16.x and 18.x.
+- [core] removed handling that maximized tabbars when performing a double-click [#11279](https://github.com/eclipse-theia/theia/pull/11279)
+  - `handleDblClickEvent` in `tab-bars.ts` is deprecated.
 
 ## v1.26.0 - 5/26/2022
 

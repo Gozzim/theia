@@ -152,7 +152,6 @@ export class TabBarRenderer extends TabBar.Renderer {
             {
                 key, className, id, title: title.caption, style, dataset,
                 oncontextmenu: this.handleContextMenuEvent,
-                ondblclick: this.handleDblClickEvent,
                 onauxclick: (e: MouseEvent) => {
                     // If user closes the tab using mouse wheel, nothing should be pasted to an active editor
                     e.preventDefault();
@@ -482,6 +481,10 @@ export class TabBarRenderer extends TabBar.Renderer {
         }
     };
 
+    /**
+     * @deprecated since 1.27.0.
+     * The framework no longer maximizes tabbars when performing a double-click.
+     */
     protected handleDblClickEvent = (event: MouseEvent) => {
         if (this.tabBar && event.currentTarget instanceof HTMLElement) {
             const id = event.currentTarget.id;
