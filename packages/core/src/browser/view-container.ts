@@ -1182,8 +1182,9 @@ export class ViewContainerPart extends BaseWidget {
             description.innerText = DescriptionWidget.is(this.wrapped) && !this.collapsed && this.wrapped.description || '';
         };
         const updateBadge = () => {
+            const visibleToolBarItems = this.toolbarRegistry.visibleItems(this.wrapped).length > 0;
             const badge = BadgeWidget.is(this.wrapped) && this.wrapped.badge;
-            if (badge) {
+            if (badge && !visibleToolBarItems) {
                 badgeSpan.innerText = badge.toString();
                 badgeContainer.style.display = badgeContainerDisplay;
             } else {
